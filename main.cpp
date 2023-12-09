@@ -12,8 +12,8 @@ int main(int argc, char *argv[])
    // std::string file_name(argv[1]);
        //std::string file_name("Chongqing_618_20171109_0034.ts");
 //std::string file_name("Chengdu_762_20171107_2328.ts");
-//  std::string file_name("dmx_all188.ts");
- std::string file_name("DTMB_subtitle.ts");
+  std::string file_name("dmx_all188.ts");
+//  std::string file_name("DTMB_subtitle.ts");
 
 
     // init log/thread
@@ -25,6 +25,7 @@ int main(int argc, char *argv[])
         std::cout << "ParseInit failed" << std::endl;
        
     }
+
 
     ret = parse_ts.ParseTS();
     if (ret == false)

@@ -10,7 +10,7 @@ void ParsePsi::decode(uint8_t *section_data, int length) {
     return;
   const uint8_t table_id = section_data[0];
   if(table_id == 0xff ) {
-    exit(0);
+    return;
   }
    //log_info("table_id = %0x ",table_id);
   switch (table_id) {
