@@ -10,7 +10,7 @@ typedef struct  {
     uint8_t stream_type;   // 流类型
     uint16_t elementary_pid;  // ES 的 PID
     uint16_t ES_info_length;
-    std::vector<ParseDescriptor> des_streams;  // ES 列表
+    ParseDescriptor des_streams;  // ES 列表
 }ES_info;
 // 定义 PMT 结构体
 typedef struct {

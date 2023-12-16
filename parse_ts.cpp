@@ -6,6 +6,7 @@
 #include <algorithm>
 #include "log.h"
 #include "parse_psi.h"
+#include <cstring>
 void Parse_Ts::GetDataFromFile()
 {
     ts_file_ = fopen(file_name_.c_str(), "rb");
@@ -78,7 +79,7 @@ int Parse_Ts::ParseTsHead(uint8_t *PaketHead)
     // {
     //     Dump();
     // }
-    Dump();
+    //Dump();
     //  Debug(PaketHead, 6);
     //   exit(0);
     //   注意是0b 不是0X 0b表示二进制

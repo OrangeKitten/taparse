@@ -3,6 +3,7 @@
 #include <stdint.h>
 #include <vector>
 #include "parse_descriptor.h"
+
 typedef struct {
     uint16_t service_id;
     uint8_t EIT_schedule_flag;
@@ -10,8 +11,9 @@ typedef struct {
     uint8_t running_status;
     uint8_t free_CA_mode;
     uint16_t descriptor_loop_length;
-     std::vector<ParseDescriptor> des_streams;  // ES 列表
+     ParseDescriptor des_streams;  // ES 列表
 }ServiceDescriptionLoop;
+
 // 定义 SDT 结构体
 typedef struct {
   uint8_t table_id; // 固定为 0x02 表示 PMT

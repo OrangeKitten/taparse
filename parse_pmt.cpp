@@ -34,15 +34,15 @@ void ParsePMT::Decode(uint8_t *data, int length) {
     es_info.stream_type = data[ES_index++];
     es_info.elementary_pid = (data[ES_index]&0x1f)<<8|data[++ES_index];
     es_info.ES_info_length = (data[++ES_index]&0x0f)<<8|data[++ES_index];
-    
-    for(int i = 1 ;i<=es_info.ES_info_length;i++) {
-        ParseDescriptor des_info;
-        des_info.descriptor_tag = data[ES_index+i];
-        des_info.descriptor_length = data[ES_index+(i+1)];
-        i+=des_info.descriptor_length+1;
-        es_info.des_streams.push_back(des_info);
+    es_info.des_streams.Parse_Descriptor(data+ES_index+1,es_info.ES_info_length);
+    // for(int i = 1 ;i<=es_info.ES_info_length;i++) {
+        //     ParseDescriptor des_info;
+        //     des_info.descriptor_tag = data[ES_index+i];
+        //     des_info.descriptor_length = data[ES_index+(i+1)];
+        //     i+=des_info.descriptor_length+1;
+        //     es_info.des_streams.push_back(des_info);
 
-    }
+    // }
     ES_index+=es_info.ES_info_length;
     Pmt_info_.elementary_streams.push_back(es_info);
 
@@ -70,10 +70,10 @@ void ParsePMT::Dump() const {
      log_info("  stream_type = %0x", es_info.stream_type);
      log_info("  elementary_pid = %0x", es_info.elementary_pid);
      log_info("  ES_info_length = %0x", es_info.ES_info_length);
-     for(auto&des_info:es_info.des_streams){
-         log_info("      descriptor_tag = %0x", des_info.descriptor_tag);
-           log_info("      descriptor_length = %0x", des_info.descriptor_length);
-     }
+     //  for(auto&des_info:es_info.des_streams){
+         //      log_info("      descriptor_tag = %0x", des_info.descriptor_tag);
+           //        log_info("      descriptor_length = %0x", des_info.descriptor_length);
+     //  }
   }
   log_info("crc = %0x", Pmt_info_.crc32);
 }

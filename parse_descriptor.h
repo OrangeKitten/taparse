@@ -1,6 +1,7 @@
  #ifndef __PARSEDESCRIPTOR__
  #define __PARSEDESCRIPTOR__
-
+#include <string>
+#include <memory>
 // struct VideoStreamDescriptor
 // {
 // 	uint8_t descriptor_tag; //0x02
@@ -73,14 +74,31 @@
 // 	bool parse(const uint8_t* p);
 // };
 
-class ParseDescriptor{
+typedef struct {
+  uint8_t descriptor_tag; // 0x48
+  uint8_t descriptor_length;
+  uint8_t servrice_type;
+  uint8_t service_provider_length;
+  std::string service_provider_name;
+  uint8_t service_name_length;
+  std::string service_name;
+  void  Parse(uint8_t *data) ;
+  void Dump();
+} Service_Descriptor;
+
+
+typedef struct  {
+//   public:
+// std::unique_ptr<Service_Descriptor>  service_descriptor;
+std::shared_ptr<Service_Descriptor>  service_descriptor;
+}DescriptorData;
+
+class ParseDescriptor {
     public:
     ParseDescriptor() = default;
     ~ParseDescriptor() = default;
-    void Parse_Descriptor();
-    void Decode(uint8_t*data,int length);
+    void Parse_Descriptor(uint8_t*data,int length);
     public:
-    uint8_t descriptor_tag;   
-    uint16_t descriptor_length;  
+    DescriptorData descriptor_data_;  
 };
  #endif

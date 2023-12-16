@@ -31,13 +31,14 @@ void ParseSDT::Decode(uint8_t *data, int length) {
     service_des_info.running_status = (data[ES_index]&0xE0)>>5;
     service_des_info.free_CA_mode = (data[ES_index]&0x10)>>4;
     service_des_info.descriptor_loop_length = (data[ES_index]&0x0f)<<8|data[++ES_index];
-    for(int i = 1 ;i<=service_des_info.descriptor_loop_length;i++) {
-        ParseDescriptor des_info;
-        des_info.descriptor_tag = data[ES_index+i];
-        des_info.descriptor_length = data[ES_index+(i+1)];
-        i+=des_info.descriptor_length+1;
-        service_des_info.des_streams.push_back(des_info);
-    }
+    service_des_info.des_streams.Parse_Descriptor(data+ES_index+1,service_des_info.descriptor_loop_length);
+    // for(int i = 1 ;i<=service_des_info.descriptor_loop_length;i++) {
+        //     ParseDescriptor des_info;
+        //     des_info.descriptor_tag = data[ES_index+i];
+        //     des_info.descriptor_length = data[ES_index+(i+1)];
+        //     i+=des_info.descriptor_length+1;
+        //     service_des_info.des_streams.push_back(des_info);
+    // }
     ES_index+=service_des_info.descriptor_loop_length;
     Sdt_info_.service_des_info.push_back(service_des_info);
 
@@ -68,10 +69,11 @@ void ParseSDT::Dump() const {
      log_info("  running_status = %0x", service_des_info.running_status);
      log_info("  free_CA_mode = %0x", service_des_info.free_CA_mode);
      log_info("  descriptor_loop_length = %0x", service_des_info.descriptor_loop_length);
-     for(auto&des_info:service_des_info.des_streams){
-         log_info("      descriptor_tag = %0x", des_info.descriptor_tag);
-           log_info("      descriptor_length = %0x", des_info.descriptor_length);
-     }
+     service_des_info.des_streams.descriptor_data_.service_descriptor->Dump();
+    //  for(auto&des_info:service_des_info.des_streams){
+         //      log_info("      descriptor_tag = %0x", des_info.descriptor_tag);
+           //        log_info("      descriptor_length = %0x", des_info.descriptor_length);
+     //  }
   }
   log_info("crc = %0x", Sdt_info_.crc32);
 }
